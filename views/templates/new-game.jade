@@ -1,1 +1,9 @@
-div Hello
+.panel(class="panel-default")
+  .panel-heading Enter players
+  .panel-body
+    .row
+      .col-xs-12(ng-repeat="player in players")
+        ud-player(player="player", remove="remove(player)")
+      .col-xs-12
+        ud-player(player="blank", commit="add(player)")
+  

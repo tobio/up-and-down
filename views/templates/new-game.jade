@@ -6,4 +6,8 @@
         ud-player(player="player", remove="remove(player)")
       .col-xs-12
         ud-player(player="blank", commit="add(player)")
+.panel(class="panel-default")
+  .panel-heading Select scoring system
+  .panel-body
+    select.form-control(ng-options="s.name for s in scoringSystems" ng-model="selectedScoringSystem")
   

@@ -1,4 +1,4 @@
-.panel(class="panel-default")
+.panel.panel-default(ng-class="errorClass")
   .panel-heading Enter players
   .panel-body
     .row
@@ -6,8 +6,10 @@
         ud-player(player="player", remove="remove(player)")
       .col-xs-12
         ud-player(player="blank", commit="add(player)")
-.panel(class="panel-default")
+.panel.panel-default
   .panel-heading Select scoring system
   .panel-body
-    select.form-control.input-lg(ng-options="s.name for s in scoringSystems" ng-model="selectedScoringSystem")
+    select.form-control.input-lg(ng-options="s.title for s in scoringSystems" ng-model="selectedScoringSystem")
+.pull-right
+    button.btn.btn-lg.btn-primary(type="button", ng-click="start()") Start Game
   

@@ -1,24 +1,38 @@
-define(['../upanddown', '../dir/player'], function(module) {
-    module.controller('NewGameCtrl', ['$scope', function($scope) {
-        $scope.players = []; 
-        $scope.blank = {};
-        $scope.scoringSystems = [{ // Get this list from a provider
-            name: 'Basic'
-        }, {
-            name: 'Ben\'s scoring'
-        }];
-        $scope.selectedScoringSystem = $scope.scoringSystems[0];
-        
-        $scope.add = function(player) {
+define(['../upanddown', '../dir/player', '../svc/scoringSystemProvider'], function(module) {
+    module.controller('NewGameCtrl', [
+        '$scope', 
+        '$timeout',
+        'ScoringSystemProvider',
+        function($scope, $timeout, ScoringSystemProvider) {
+            $scope.players = []; 
             $scope.blank = {};
+            $scope.scoringSystems = ScoringSystemProvider.available;
+            $scope.selectedScoringSystem = $scope.scoringSystems[0];
             
-            $scope.players.push(player);
+            function flashError(times, on) {
+                $scope.errorClass = on ? 'panel-danger' : '';
+                
+                if(times > 0) {
+                    times = on ? times - 1 : times;
+                    $timeout(flashError.bind(null, times, !on), 300);
+                }
+            }
             
-            return true;
-        };
-        
-        $scope.remove = function(player) {
-            $scope.players.splice($scope.players.indexOf(player), 1);
-        };
-    }]);
+            $scope.add = function(player) {
+                $scope.blank = {};
+                
+                $scope.players.push(player);
+                
+                return true;
+            };
+            
+            $scope.remove = function(player) {
+                $scope.players.splice($scope.players.indexOf(player), 1);
+            };
+            
+            $scope.start = function() {
+                if(!$scope.players.length) flashError(2, true);
+            };
+        }
+    ]);
 });

@@ -1,13 +1,23 @@
-define(['../upanddown', '../dir/player', '../svc/scoringSystemProvider'], function(module) {
+define([
+        '../upanddown', 
+        '../dir/newPlayer', 
+        '../svc/scoringSystemProvider',
+        '../svc/gameMgr'
+    ], 
+function(module) {
     module.controller('NewGameCtrl', [
         '$scope', 
         '$timeout',
         'ScoringSystemProvider',
-        function($scope, $timeout, ScoringSystemProvider) {
-            $scope.players = []; 
-            $scope.blank = {};
-            $scope.scoringSystems = ScoringSystemProvider.available;
-            $scope.selectedScoringSystem = $scope.scoringSystems[0];
+        'GameManager',
+        function($scope, $timeout, ScoringSystemProvider, GameManager) {
+            function reset() {
+                $scope.players = []; 
+                $scope.blank = {};
+                $scope.scoringSystems = ScoringSystemProvider.available;
+                $scope.selectedScoringSystem = $scope.scoringSystems[0];
+                $scope.currentDealer = null;
+            }
             
             function flashError(times, on) {
                 $scope.errorClass = on ? 'panel-danger' : '';
@@ -21,6 +31,11 @@ define(['../upanddown', '../dir/player', '../svc/scoringSystemProvider'], functi
             $scope.add = function(player) {
                 $scope.blank = {};
                 
+                if(!$scope.currentDealer) {
+                    player.dealer = true;
+                    $scope.currentDealer = player;
+                }
+                
                 $scope.players.push(player);
                 
                 return true;
@@ -30,9 +45,24 @@ define(['../upanddown', '../dir/player', '../svc/scoringSystemProvider'], functi
                 $scope.players.splice($scope.players.indexOf(player), 1);
             };
             
+            $scope.setDealer = function(player) {
+                $scope.currentDealer.dealer = false;
+                
+                player.dealer = true;
+                $scope.currentDealer = player;
+            }
+            
             $scope.start = function() {
-                if(!$scope.players.length) flashError(2, true);
+                if($scope.players.length < 3) {
+                    flashError(2, true);
+                    return;
+                }
+                
+                GameManager.startGame($scope.players, $scope.selectedScoringSystem);                
+                reset();
             };
+            
+            reset();
         }
     ]);
 });

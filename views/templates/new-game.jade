@@ -3,9 +3,9 @@
   .panel-body
     .row
       .col-xs-12(ng-repeat="player in players")
-        ud-player(player="player", remove="remove(player)")
+        ud-new-player(player="player", remove="remove(player)", set-dealer="setDealer(player)")
       .col-xs-12
-        ud-player(player="blank", commit="add(player)")
+        ud-new-player(player="blank", commit="add(player)")
 .panel.panel-default
   .panel-heading Select scoring system
   .panel-body

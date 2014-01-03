@@ -1,5 +1,5 @@
-define(['../upanddown', 'text!./player.html'], function(module, template) {
-    module.directive('udPlayer', ['$timeout', function($timeout) {
+define(['../upanddown', 'text!./newPlayer.html'], function(module, template) {
+    module.directive('udNewPlayer', ['$timeout', function($timeout) {
         return {
             restrict: 'E',
             replace: true,
@@ -7,7 +7,8 @@ define(['../upanddown', 'text!./player.html'], function(module, template) {
             scope: {
                 player: '=',
                 commit: '&',
-                remove: '&'
+                remove: '&',
+                setDealer: '&'
             },
             link: function(scope, element, attributes) {
                 function flashError(times, on) {

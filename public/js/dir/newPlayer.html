@@ -8,6 +8,8 @@
         </div>
         <div ng-if="!editing">
             <span class="editable" ng-click="edit()">{{ player.name }}</span>
+            &nbsp;&ndash;&nbsp;
+            <button class="btn btn-xs" ng-class="{ 'btn-primary': player.dealer, 'btn-default': !player.dealer }" ng-click="setDealer({ player: player })">Dealer</button>
             <button type="button" class="close" aria-hidden="true" ng-click="remove({player: player})">&times;</button>
         </div>
     </div>

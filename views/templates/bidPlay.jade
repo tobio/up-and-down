@@ -1,0 +1,10 @@
+.panel.panel-default(ng-class="errorClass")
+  .panel-heading {{title}}
+  .panel-body
+    .row
+      .col-xs-8.col-xs-offset-2
+        accordion(close-others="true")
+          accordion-group(heading="{{player.name}}", ng-repeat="player in hand.game.players | orderBy: distanceFromDealer", is-open="activeIndex === $index")
+            .btn-group
+              button(ng-repeat="trick in tricks()", type="button", class="btn", ng-class="getTrickClass(player, trick)", ng-click="set(player, trick, $parent.$index)") {{trick}}
+ 

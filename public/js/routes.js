@@ -1,4 +1,4 @@
-define(['upanddown', 'ctrl/newGame', 'ctrl/bidding'], function(module) {
+define(['upanddown', 'ctrl/newGame', 'ctrl/bidding', 'ctrl/play'], function(module) {
     module.config(['$routeProvider', function($routeProvider) {
         $routeProvider.
             when('/new', {
@@ -6,11 +6,11 @@ define(['upanddown', 'ctrl/newGame', 'ctrl/bidding'], function(module) {
                 controller: 'NewGameCtrl'
             }).
             when('/bid', {
-                templateUrl: '/bidding.html',
+                templateUrl: '/bidPlay.html',
                 controller: 'BiddingCtrl'
             }).
             when('/play', {
-                templateUrl: '/play.html',
+                templateUrl: '/bidPlay.html',
                 controller: 'PlayCtrl'
             }).
             otherwise({
